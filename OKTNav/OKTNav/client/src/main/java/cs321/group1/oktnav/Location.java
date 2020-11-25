@@ -1,14 +1,69 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package cs321.group1.oktnav;
 
+import java.util.ArrayList;
+
 /**
- *
- * @author Tobin
+ * A class that holds information about locations on the OKT Map.
+ * @author Areeb
  */
 public class Location {
+    protected int x;
+    protected int y;
+    protected int z;
     
+    protected ArrayList<Location> connections;
+    
+    /**
+     * Constructs a Location object with the given information.
+     * @param x the x coordinate on the map.
+     * @param y the y coordinate on the map.
+     * @param z the z coordinate on the map (arbitrary representation of each floor).
+     * @param connections an ArrayList<Location> of other locations this Location is connected to.
+     */
+    public Location(int x, int y, int z, ArrayList<Location> connections) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.connections = connections;
+    }
+    
+    /**
+     * Calculates the distance to another connected location.
+     * @param other the other location to consider.
+     * @return the distance between the two locations.
+     */
+    public double calculateDistance(Location other) throws IllegalArgumentException {
+        if (connections.contains(other)){
+            return Math.sqrt(
+                    Math.pow(this.x-other.x, 2) +
+                    Math.pow(this.y-other.y, 2) +
+                    Math.pow(this.z-other.z, 2)
+            );
+        } else {
+            throw new IllegalArgumentException("The provided Location other is not connected to this particular node.");
+        }
+    }
+    /**
+     * Returns the X coordinate of this location.
+     * @return the X coordinate of this location.
+     */
+    public int getX() { return x; }
+    /**
+     * Returns the Y coordinate of this location.
+     * @return the Y coordinate of this location.
+     */
+    public int getY() { return y; }
+    /**
+     * Returns the Z coordinate of this location.
+     * @return the Z coordinate of this location.
+     */
+    public int getZ() { return z; }
+    
+    /**
+     * Returns a copy of the list of connections to this location.
+     * @return a copy of the list of connections.
+     */
+    public ArrayList<Location> getConnections() {
+        return new ArrayList<Location>(connections);
+    }
 }
