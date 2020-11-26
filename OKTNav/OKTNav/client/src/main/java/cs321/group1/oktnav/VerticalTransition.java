@@ -32,8 +32,8 @@ public class VerticalTransition extends Location {
      */
     @Override
     public double calculateDistance(Location other) throws IllegalArgumentException{
-        if (other instanceof VerticalTransition && connections.contains(other)) {
-            if (this.z != other.z) {
+        if (other instanceof VerticalTransition && this.getConnections().contains(other)) {
+            if (this.getZ() != other.getZ()) {
                 return (isElevator) ? ELEVATOR_DISTANCE : STAIRCASE_DISTANCE;
             } else {
                 return super.calculateDistance(other);
