@@ -7,18 +7,18 @@ import java.util.ArrayList;
  * @author Areeb
  */
 public class Location {
-    protected int x;
-    protected int y;
-    protected int z;
+    private int x;
+    private int y;
+    private int z;
     
-    protected ArrayList<Location> connections;
+    private ArrayList<Location> connections;
     
     /**
      * Constructs a Location object with the given information.
      * @param x the x coordinate on the map.
      * @param y the y coordinate on the map.
      * @param z the z coordinate on the map (arbitrary representation of each floor).
-     * @param connections an ArrayList<Location> of other locations this Location is connected to.
+     * @param connections an ArrayList\<Location\> of other locations this Location is connected to.
      */
     public Location(int x, int y, int z, ArrayList<Location> connections) {
         this.x = x;
