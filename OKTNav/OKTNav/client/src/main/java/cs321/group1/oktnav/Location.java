@@ -7,9 +7,13 @@ import java.util.ArrayList;
  * @author Areeb
  */
 public class Location {
-    private int x;
-    private int y;
-    private int z;
+    private final int x;
+    private final int y;
+    private final int z;
+    
+    //These are used for each location during the A* Pathfinder
+    private int h_cost = Integer.MAX_VALUE;
+    private int g_cost = Integer.MAX_VALUE;
     
     private ArrayList<Location> connections;
     
@@ -66,4 +70,26 @@ public class Location {
     public ArrayList<Location> getConnections() {
         return new ArrayList<Location>(connections);
     }
+    
+    /**
+     * Returns the h_cost for this location.
+     * @return the h_cost for this location.
+     */
+    public int getHCost() {return h_cost; }
+    
+     /**
+     * Returns the g_cost for this location.
+     * @return the g_cost for this location.
+     */
+    public int getGCost() {return g_cost; }
+    
+     /**
+     * Sets the h_cost for this location.
+     */
+    public void setHCost(int h) {h_cost = h; }
+    
+      /**
+     * Sets the g_cost for this location.
+     */
+    public void setGCost(int g) {g_cost = g; }
 }
