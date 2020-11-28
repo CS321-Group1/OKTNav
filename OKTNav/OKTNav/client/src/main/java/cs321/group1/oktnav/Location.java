@@ -30,7 +30,7 @@ public class Location {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.connections = connections;
+        this.connections = new ArrayList<Location>(connections);
     }
     
     /**
