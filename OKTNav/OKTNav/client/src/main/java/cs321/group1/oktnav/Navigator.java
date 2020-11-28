@@ -1,6 +1,9 @@
 package cs321.group1.oktnav;
 
 import java.util.ArrayList;
+import java.util.PriorityQueue;
+import java.util.Comparator;
+
 /**
  * Class implementation of the Navigation class;
  * This will calculate the path from the user's start point to the endpoint
@@ -36,10 +39,65 @@ public class Navigator {
      */
     public ArrayList<Location> calculatePath(Location source, Location goal, int navigationFlag){
         source.setG(0); //the accumulated cost to get to the first node is 0
-        source.setH(calcH(source, goal));
+        source.setH(calcH(source, goal)); //h cost calculated as straight line distance with calcH
+        source.setF(source.getH()); //since g_cost is 0 for the source, f_cost is just h_cost
         
         
+        //Create priority queue of 'frontier' locations in the graph
+        PriorityQueue<Location> frontier = new PriorityQueue<>(new Comparator<Location>() {
+            @Override
+            public int compare(Location a, Location b){
+                return Double.compare (a.getF(), b.getF());
+            }
+        });
         
-        return new ArrayList<Location>(calculatedPath);
+        //Add our first source node to the frontier
+        frontier.add(source);
+        
+        //initialize step tracker
+        int numberOfSteps = 0;
+        
+        //while there are still locations on the frontier...
+        while(!frontier.isEmpty()) {
+            numberOfSteps++;
+            
+            //get the Location with the minumum estimated distance from the goal
+            Location current = frontier.poll();
+            
+            System.out.println("Current location: " + current.getX() + ", " 
+                                                    + current.getY() + ", " 
+                                                    + current.getZ());
+            //if we have found our goal Location...
+            if(current.equals(goal)){
+                break;
+            }
+            
+            //check all the neighbors
+            for(Location neighbor: current.getConnections()){
+                double cost = current.calculateDistance(neighbor);
+                
+                //if we go to this neighbor location...
+                //our new g cost will be our current g cost plus the distance to the neighbor
+                double new_g_cost = current.getG() + cost;      
+                //and our new f cost will be that new g cost plus the neighbor's h cost
+                double new_f_cost = neighbor.getH() + new_g_cost;
+                
+                //if this neigbor is the best option...
+                if(new_f_cost < neighbor.getF()){
+                    neighbor.setParent(current);
+                    neighbor.setG( new_g_cost);
+                    neighbor.setF( new_f_cost);
+                    
+                    if(frontier.contains(neighbor)){
+                        frontier.remove(neighbor);
+                    }
+                    frontier.add(neighbor);
+                }
+            }
+        }
+        
+        System.out.println("Number Of Steps: " + numberOfSteps);
+        
+        return null;
     }
 }

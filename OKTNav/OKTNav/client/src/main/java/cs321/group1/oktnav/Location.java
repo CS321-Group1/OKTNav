@@ -15,6 +15,7 @@ public class Location {
     private double h_cost = Integer.MAX_VALUE;
     private double g_cost = Integer.MAX_VALUE;
     private double f_cost = Integer.MAX_VALUE;
+    private Location parent;
     
     private ArrayList<Location> connections;
     
@@ -90,6 +91,12 @@ public class Location {
      */
     public double getF() {return f_cost; }
     
+     /**
+     * Returns the parent for this location.
+     * @return the parent for this location.
+     */
+    public Location getParent() {return parent; }
+    
     
      /**
      * Sets the h_cost for this location.
@@ -105,6 +112,13 @@ public class Location {
      * Sets the f_cost for this location.
      */
     public void setF(double f) {f_cost = f; }
+     
+    /**
+     * Sets the parent for this location.
+     */
+    public void setParent(Location p) {parent = p; }
+    
+    
     
     
 }
