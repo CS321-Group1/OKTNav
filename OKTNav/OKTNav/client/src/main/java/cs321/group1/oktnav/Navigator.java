@@ -35,8 +35,8 @@ public class Navigator {
      * @return 
      */
     public ArrayList<Location> calculatePath(Location source, Location goal, int navigationFlag){
-        source.setGCost(0); //the accumulated cost to get to the first node is 0
-        source.setHCost(calcH(source, goal));
+        source.setG(0); //the accumulated cost to get to the first node is 0
+        source.setH(calcH(source, goal));
         
         
         

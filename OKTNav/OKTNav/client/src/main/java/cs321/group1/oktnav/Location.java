@@ -75,21 +75,21 @@ public class Location {
      * Returns the h_cost for this location.
      * @return the h_cost for this location.
      */
-    public double getHCost() {return h_cost; }
+    public double getH() {return h_cost; }
     
      /**
      * Returns the g_cost for this location.
      * @return the g_cost for this location.
      */
-    public double getGCost() {return g_cost; }
+    public double getG() {return g_cost; }
     
      /**
      * Sets the h_cost for this location.
      */
-    public void setHCost(double h) {h_cost = h; }
+    public void setH(double h) {h_cost = h; }
     
       /**
      * Sets the g_cost for this location.
      */
-    public void setGCost(double g) {g_cost = g; }
+    public void setG(double g) {g_cost = g; }
 }
