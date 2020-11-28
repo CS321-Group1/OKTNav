@@ -16,15 +16,30 @@ public class Navigator {
     public Navigator(Map map){
     
     }
+    /**
+     * Calculates the heuristic value for use by the A* navigation.
+     * @param current the current location
+     * @param goal the current goal
+     * @return the straight line distance between the current location and the goal
+     */
+    private double calcH(Location current, Location goal){
+        return Math.sqrt( Math.pow(current.getY() - goal.getY(), 2) + 
+                Math.pow(current.getX() - goal.getX(), 2));
+    }
     
     /**
      * Function that returns the calculated path from the start point to the end point, selected by the user
-     * @param from - starting location selected by the user
-     * @param to - ending location selected by the user
+     * @param source - starting location selected by the user
+     * @param goal; - ending location selected by the user
      * @param navigationFlag - flag set to determine whether or not the user needs to take elevators, stairs, or no preference
      * @return 
      */
-    public ArrayList<Location> calculatePath(Location from, Location to, int navigationFlag){
+    public ArrayList<Location> calculatePath(Location source, Location goal, int navigationFlag){
+        source.setGCost(0); //the accumulated cost to get to the first node is 0
+        source.setHCost(calcH(source, goal));
+        
+        
+        
         return new ArrayList<Location>(calculatedPath);
     }
 }
