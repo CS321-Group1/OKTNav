@@ -14,6 +14,7 @@ public class Location {
     //These are used for each location during the A* Pathfinder
     private double h_cost = Integer.MAX_VALUE;
     private double g_cost = Integer.MAX_VALUE;
+    private double f_cost = Integer.MAX_VALUE;
     
     private ArrayList<Location> connections;
     
@@ -84,6 +85,13 @@ public class Location {
     public double getG() {return g_cost; }
     
      /**
+     * Returns the f_cost for this location.
+     * @return the f_cost for this location.
+     */
+    public double getF() {return f_cost; }
+    
+    
+     /**
      * Sets the h_cost for this location.
      */
     public void setH(double h) {h_cost = h; }
@@ -92,4 +100,11 @@ public class Location {
      * Sets the g_cost for this location.
      */
     public void setG(double g) {g_cost = g; }
+    
+    /**
+     * Sets the f_cost for this location.
+     */
+    public void setF(double f) {f_cost = f; }
+    
+    
 }
