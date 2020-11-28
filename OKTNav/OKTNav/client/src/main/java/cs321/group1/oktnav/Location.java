@@ -74,6 +74,14 @@ public class Location {
     }
     
     /**
+     * Adds a new location to the list of neighbors
+     * @param x the location to add
+     * @return true for successful addition of the location to the list
+     */
+    public boolean addConnection(Location x){
+        return connections.add(x);
+    }
+    /**
      * Returns the h_cost for this location.
      * @return the h_cost for this location.
      */
