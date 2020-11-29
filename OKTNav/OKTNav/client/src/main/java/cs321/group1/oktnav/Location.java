@@ -7,9 +7,15 @@ import java.util.ArrayList;
  * @author Areeb
  */
 public class Location {
-    private int x;
-    private int y;
-    private int z;
+    private final int x;
+    private final int y;
+    private final int z;
+    
+    //These are used for each location during the A* Pathfinder
+    private double h_cost = Integer.MAX_VALUE;
+    private double g_cost = Integer.MAX_VALUE;
+    private double f_cost = Integer.MAX_VALUE;
+    private Location parent;
     
     private ArrayList<Location> connections;
     
@@ -24,7 +30,7 @@ public class Location {
         this.x = x;
         this.y = y;
         this.z = z;
-        this.connections = connections;
+        this.connections = new ArrayList<Location>(connections);
     }
     
     /**
@@ -66,4 +72,61 @@ public class Location {
     public ArrayList<Location> getConnections() {
         return new ArrayList<Location>(connections);
     }
+    
+    /**
+     * Adds a new location to the list of neighbors
+     * @param x the location to add
+     * @return true for successful addition of the location to the list
+     */
+    public boolean addConnection(Location x){
+        return connections.add(x);
+    }
+    /**
+     * Returns the h_cost for this location.
+     * @return the h_cost for this location.
+     */
+    public double getH() {return h_cost; }
+    
+     /**
+     * Returns the g_cost for this location.
+     * @return the g_cost for this location.
+     */
+    public double getG() {return g_cost; }
+    
+     /**
+     * Returns the f_cost for this location.
+     * @return the f_cost for this location.
+     */
+    public double getF() {return f_cost; }
+    
+     /**
+     * Returns the parent for this location.
+     * @return the parent for this location.
+     */
+    public Location getParent() {return parent; }
+    
+    
+     /**
+     * Sets the h_cost for this location.
+     */
+    public void setH(double h) {h_cost = h; }
+    
+      /**
+     * Sets the g_cost for this location.
+     */
+    public void setG(double g) {g_cost = g; }
+    
+    /**
+     * Sets the f_cost for this location.
+     */
+    public void setF(double f) {f_cost = f; }
+     
+    /**
+     * Sets the parent for this location.
+     */
+    public void setParent(Location p) {parent = p; }
+    
+    
+    
+    
 }
