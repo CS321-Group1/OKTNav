@@ -69,6 +69,9 @@ public class Navigator {
                                                     + current.getZ());
             //if we have found our goal Location...
             if(current.equals(goal)){
+                System.out.println("Current location: " + current.getX() + ", " 
+                                                        + current.getY() + ", " 
+                                                        + current.getZ());
                 break;
             }
             
@@ -97,6 +100,7 @@ public class Navigator {
         }
         
         System.out.println("Number Of Steps: " + numberOfSteps);
+      
         
         return null;
     }
