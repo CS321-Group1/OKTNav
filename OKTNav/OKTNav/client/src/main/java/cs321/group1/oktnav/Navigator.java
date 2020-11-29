@@ -42,6 +42,7 @@ public class Navigator {
         source.setH(calcH(source, goal)); //h cost calculated as straight line distance with calcH
         source.setF(source.getH()); //since g_cost is 0 for the source, f_cost is just h_cost
         
+        ArrayList<Location> path = new ArrayList<>();
         
         //Create priority queue of 'frontier' locations in the graph
         PriorityQueue<Location> frontier = new PriorityQueue<>(new Comparator<Location>() {
@@ -69,7 +70,7 @@ public class Navigator {
                                                     + current.getZ());
             //if we have found our goal Location...
             if(current.equals(goal)){
-                System.out.println("Current location: " + current.getX() + ", " 
+                System.out.println("We found the goal at: " + current.getX() + ", " 
                                                         + current.getY() + ", " 
                                                         + current.getZ());
                 break;
@@ -77,7 +78,13 @@ public class Navigator {
             
             //check all the neighbors
             for(Location neighbor: current.getConnections()){
+                System.out.println("\tConsidering: " + neighbor.getX() + "," 
+                                                    + neighbor.getY() + ',' 
+                                                    + neighbor.getZ());
+                
                 double cost = current.calculateDistance(neighbor);
+                
+                neighbor.setH(calcH(neighbor, goal));
                 
                 //if we go to this neighbor location...
                 //our new g cost will be our current g cost plus the distance to the neighbor
@@ -100,8 +107,15 @@ public class Navigator {
         }
         
         System.out.println("Number Of Steps: " + numberOfSteps);
+        
+        Location x = goal;
+        while(x != null && !x.equals(source)){
+            path.add(0, x);
+            x = x.getParent();
+        }
+        path.add(0, source);
       
         
-        return null;
+        return path;
     }
 }
