@@ -41,9 +41,13 @@ public class Main {
         ThreadPoolExecutor executor = (ThreadPoolExecutor)Executors.newFixedThreadPool(THREAD_COUNT);
         
         server.setExecutor(executor);
-        server.createContext("/", new IndexHandler());
+        server.createContext("/", new PathHandler("index.html"));
+        server.createContext("/index.js", new PathHandler("index.js"));
+        server.createContext("/navigate", new NavRequestHandler());
+        server.createContext("/exit", new ExitHandler(server));
         
         server.start();
+        
         // Launch Web Page in Browser
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             Desktop.getDesktop().browse(new URI("http://" + server.getAddress()));
