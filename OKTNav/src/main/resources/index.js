@@ -1,7 +1,7 @@
 // Stores map locations after retrieval
 var map_locations;
-var test;
 var preference = "n/a";
+var path_line;
 
 function retrieve_map_locations() {
     // TODO
@@ -9,7 +9,21 @@ function retrieve_map_locations() {
 
 function process_navigation_response(response) {
     console.log(response);
-    test = response;
+    path = response.path;
+    var polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+    polyline.setAttribute("fill", "white");
+    polyline.setAttribute("stroke-width", "6");
+    polyline.setAttribute("stroke", "#BBC42A");
+    var points = "";
+    for(var i = 1; i < path.length; i++) {
+        console.log(path[i]);        
+        points += path[i].x + "," + path[i].y + " ";
+    }
+    polyline.setAttribute("points", points);
+    polyline.setAttribute("class", "cls-1")
+    polyline.setAttribute("transform", $("defs").attr("transform"));
+    $("#Layer_2").append(polyline);
+    path_line = polyline;
 }
 
 function submit_navigation_request() {

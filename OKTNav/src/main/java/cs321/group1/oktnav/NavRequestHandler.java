@@ -24,9 +24,9 @@ public class NavRequestHandler implements HttpHandler {
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
         
         Location a = new Location(0, 0, 0, new ArrayList<Location>());
-        Location b = new Location(5, 0, 0, new ArrayList<Location>());
-        Location c = new Location(10, 0, 0, new ArrayList<Location>());
-        Location d = new Location(10, 5, 0, new ArrayList<Location>());        
+        Location b = new Location(3, 2, 0, new ArrayList<Location>());
+        Location c = new Location(927, 20, 0, new ArrayList<Location>());
+        Location d = new Location(100, 50, 0, new ArrayList<Location>());        
         
         ArrayList<Location> p = new ArrayList<>();
         p.add(a);
