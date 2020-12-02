@@ -17,7 +17,7 @@ public class ExitHandler implements HttpHandler {
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        server.stop(1);
+        server.stop(0);
         System.out.println("End Game");
         System.exit(0);
     }
