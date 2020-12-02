@@ -1,6 +1,7 @@
 package cs321.group1.oktnav;
 
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 /**
  * A class that holds information about locations on the OKT Map.
@@ -126,7 +127,13 @@ public class Location {
      */
     public void setParent(Location p) {parent = p; }
     
-    
-    
-    
+    public JSONObject getJSON() {
+        JSONObject jsonBuilder = new JSONObject();
+        
+        jsonBuilder.put("x", x);
+        jsonBuilder.put("y", y);
+        jsonBuilder.put("z", z);
+        
+        return jsonBuilder;
+    }    
 }
