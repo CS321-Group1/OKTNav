@@ -42,12 +42,4 @@ public class VerticalTransition extends Location {
             return super.calculateDistance(other);
         }
     }
-    
-    /**
-     * Getter for isElevator boolean.
-     * @return true if the vertical transition is an elevator 
-     */
-    public boolean isElevator(){
-        return isElevator;
-    }
 }

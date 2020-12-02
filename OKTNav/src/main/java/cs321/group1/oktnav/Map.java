@@ -35,8 +35,4 @@ public class Map {
         // Returning the object's path where necessary
         return new ArrayList<Location>(path);
     }
-    
-    public ArrayList<VerticalTransition> getVerticalTransitions(){
-        return new ArrayList<VerticalTransition>();
-    }
 }
