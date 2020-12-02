@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import org.json.JSONObject;
 
 /**
@@ -21,12 +22,21 @@ public class NavRequestHandler implements HttpHandler {
         String preference = params[2].replace("pref=", "");
         
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
-
-        JSONObject replyBuilder = new JSONObject();        
-        replyBuilder.put("test", 2013);
         
-        String reply = replyBuilder.toString();
+        Location a = new Location(0, 0, 0, new ArrayList<Location>());
+        Location b = new Location(5, 0, 0, new ArrayList<Location>());
+        Location c = new Location(10, 0, 0, new ArrayList<Location>());
+        Location d = new Location(10, 5, 0, new ArrayList<Location>());        
         
+        ArrayList<Location> p = new ArrayList<>();
+        p.add(a);
+        p.add(b);
+        p.add(c);
+        p.add(d);
+        
+        Path path = new Path(p, 300);
+        
+        String reply = path.getJSON().toString();
         exchange.sendResponseHeaders(200, reply.getBytes().length);
         OutputStream response = exchange.getResponseBody();
         
