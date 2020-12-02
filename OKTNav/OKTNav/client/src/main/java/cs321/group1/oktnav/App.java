@@ -22,6 +22,8 @@ public class App {
           Location c = new Location(1, 1, 0, e);
           Location d = new Location(2, 2, 0, e);
           Location f = new Location(2, 0, 0, e);
+          Location g = new Location(2, 2, 1, e);
+          Location h = new Location(0, 2, 1, e);
           
           a.addConnection(b);
           a.addConnection(f);
@@ -34,19 +36,23 @@ public class App {
           //c.addConnection(d);
           
           d.addConnection(b);
-          //d.addConnection(c);
+          d.addConnection(c);
           d.addConnection(f);
+          d.addConnection(g);
           
           f.addConnection(a);   
           f.addConnection(d);
           
+          g.addConnection(d);
+          g.addConnection(h);
+          
           Navigator nav = new Navigator(new Map(e));
           
-          ArrayList<Location> path = nav.calculatePath(a, d, 0);
+          Path path = nav.findRoute(a, h, 0);
          
           
           System.out.println("Path:");
-          for(Location loc: path){
+          for(Location loc: path.getPath()){
               System.out.println(" " + loc.getX() + ","
                                + loc.getY() + ","
                                + loc.getZ());
