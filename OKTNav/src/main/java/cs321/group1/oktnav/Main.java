@@ -24,7 +24,7 @@ public class Main {
         
         boolean serverNotCreated = true;
         HttpServer server = null;
-        Random random = new Random();
+        Random random = new Random();     
         
         while(serverNotCreated)
         {
