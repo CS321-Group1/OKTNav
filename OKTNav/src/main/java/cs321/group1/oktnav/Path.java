@@ -1,6 +1,7 @@
 
 package cs321.group1.oktnav;
 import java.util.ArrayList;
+import org.json.JSONObject;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Path {
      * Returns the location path.
      * @return the path
      */
-    ArrayList<Location> getPath(){
+    public ArrayList<Location> getPath(){
         return path;
     }
     
@@ -29,7 +30,19 @@ public class Path {
      * Returns the length of the path.
      * @return path length
      */
-    double getLength(){
+    public double getLength(){
         return length;
+    }
+    
+    public JSONObject getJSON() {
+        JSONObject jsonBuilder = new JSONObject();
+        
+        jsonBuilder.put("length", length);
+        JSONObject[] p = new JSONObject[path.size()];
+        for (int i = 0; i < p.length; i++)
+            p[i] = path.get(i).getJSON();
+        jsonBuilder.put("path", p);
+        
+        return jsonBuilder;
     }
 }
