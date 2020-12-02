@@ -41,7 +41,7 @@ function initialize() {
     retrieve_map_locations();
     $("#go").click(submit_navigation_request);
     $("#exit").click(exit_application);
-    window.onbeforeunload = exit_application;
+    window.onunload = exit_application;
 }
 
 $(document).ready(initialize);
