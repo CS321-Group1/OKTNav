@@ -13,13 +13,16 @@ import org.json.JSONObject;
  * @author Areeb
  */
 public class NavRequestHandler implements HttpHandler {
-    
-    public NavRequestHandler() {
-        
-    }
-    
-    public NavRequestHandler(Hashtable<String, Location> nameToIDMap) {
-        
+    private Map map;
+    private Navigator navigator;
+    private Hashtable<String, Integer> preferenceToFlagMap;
+    public NavRequestHandler(Map map) {
+        this.map = map;
+        navigator = new Navigator(map);
+        preferenceToFlagMap = new Hashtable<>();
+        preferenceToFlagMap.put("n/a", -1);
+        preferenceToFlagMap.put("stairs", 0);
+        preferenceToFlagMap.put("elevator", 1);
     }
     
     @Override
@@ -32,20 +35,13 @@ public class NavRequestHandler implements HttpHandler {
         
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
         
-        Location a = new Location(0, 0, 0, new ArrayList<Location>());
-        Location b = new Location(3, 2, 0, new ArrayList<Location>());
-        Location c = new Location(927, 20, 0, new ArrayList<Location>());
-        Location d = new Location(100, 50, 0, new ArrayList<Location>());        
         
-        ArrayList<Location> p = new ArrayList<>();
-        p.add(a);
-        p.add(b);
-        p.add(c);
-        p.add(d);
-        
-        Path path = new Path(p, 300);
-        
+        Location from = map.getLocationByID(navFrom);
+        Location to = map.getLocationByID(navTo);
+        int navigationFlag = preferenceToFlagMap.get(preference);
+        Path path = navigator.findRoute(from, to, navigationFlag);
         String reply = path.getJSON().toString();
+        
         exchange.sendResponseHeaders(200, reply.getBytes().length);
         OutputStream response = exchange.getResponseBody();
         

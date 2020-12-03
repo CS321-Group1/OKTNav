@@ -28,6 +28,8 @@ public class Navigator {
      * @return 
      */   
     public Path findRoute(Location source, Location goal, int navigationFlag){
+        
+        map.resetAllLocations();
             
         //If the source and destination are on the same floor, return the basic A* path
         if(source.getZ() == goal.getZ()){

@@ -20,8 +20,8 @@ public class VerticalTransition extends Location {
      * @param z the z coordinate on the map.
      * @param connections an ArrayList\<Location\> of other locations this Location is connected to.
      */
-    public VerticalTransition(boolean isElevator, int x, int y, int z, ArrayList<Location> connections) {
-        super(x, y, z, connections);
+    public VerticalTransition(String id, boolean isElevator, int x, int y, int z, ArrayList<Location> connections) {
+        super(id, x, y, z, connections);
         this.isElevator = isElevator;
     }
     
