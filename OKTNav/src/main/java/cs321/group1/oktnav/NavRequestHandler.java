@@ -12,7 +12,15 @@ import org.json.JSONObject;
  * @author Areeb
  */
 public class NavRequestHandler implements HttpHandler {
-
+    
+    public NavRequestHandler() {
+        
+    }
+    
+    public NavRequestHandler(Hashtable<String, Location> nameToIDMap) {
+        
+    }
+    
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String query = exchange.getRequestURI().getQuery();

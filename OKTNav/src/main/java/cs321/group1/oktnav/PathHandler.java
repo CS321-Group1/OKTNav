@@ -30,5 +30,4 @@ public class PathHandler implements HttpHandler {
         response.flush();
         response.close();
     }
-    
 }

@@ -10,6 +10,7 @@ import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
@@ -25,6 +26,12 @@ public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
         // Create initial list of locations so we can pass into the Map variable on initialization
         ArrayList<Location> allLocations = new ArrayList<Location>();
+        // Create a hashtable to keep track of what name corresponds to what ID
+        Hashtable<String, String> nameToIDMap = new Hashtable<>();
+        // Create a hashtable to keep track of what ID corresponds to what Location
+        Hashtable<String, Location> idToLocationMap = new Hashtable<>();
+        // Create a hashtable to keep track of what connections each location has
+        Hashtable<String, ArrayList<String>> idToConnectionsMap = new Hashtable<>();
         // Scanner variable; will be used to read the CSV file containing all the locations
         Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("OKTFloor1Locations.csv"));
         // Declaring delimiter to check throughout the CSV file
@@ -33,18 +40,36 @@ public class Main {
         while(scanner.hasNext()){
             // TODO: Read each individual location in from the CSV file and insert into ArrayList<Location> allLocations
             String lineData[] = scanner.nextLine().split(",");
-            // Retrieve read X-value from CSV, converting from a string to an integer
-            int X = (int) Float.parseFloat(lineData[2]);
-            // Retrieve read Y-value from CSV, converting from a string to an integer
-            int Y = (int) Float.parseFloat(lineData[3]);
-            // Retrieve read Z-value from cSV, converting from a string to an integer
-            int Z = (int) Float.parseFloat(lineData[4]);
-            // Create location object with read values from the CSV file
-            Location readLocation = new Location(X, Y, Z, new ArrayList<Location>());
-            // Add read location from  CSV file into ArrayList of total locations
-            allLocations.add(readLocation);
+            try {
+                // Check if this location has a name
+                if (lineData[1].length() > 0) {
+                    nameToIDMap.put(lineData[1], lineData[0]);
+                }
+                // Retrieve read X-value from CSV, converting from a string to an integer
+                int X = (int) Float.parseFloat(lineData[2]);
+                // Retrieve read Y-value from CSV, converting from a string to an integer
+                int Y = (int) Float.parseFloat(lineData[3]);
+                // Retrieve read Z-value from cSV, converting from a string to an integer
+                int Z = (int) Float.parseFloat(lineData[4]);
+                // Create location object with read values from the CSV file
+                Location readLocation = new Location(X, Y, Z, new ArrayList<Location>());
+                // Add read location from  CSV file into ArrayList of total locations
+                allLocations.add(readLocation);
+                // Map ID to Location object
+                idToLocationMap.put(lineData[0], readLocation);
+                
+                ArrayList<String> conns = new ArrayList<>();
+                for (int i = 5; i < lineData.length; i++)
+                {
+                    if (lineData[i].length() > 0)
+                        conns.add(lineData[i]);
+                }
+                idToConnectionsMap.put(lineData[0], conns);
+            } catch (NumberFormatException e) {
+                // This skips the format error from the header line in the CSV
+            }
         }
-
+        
         // Config Options for Web Server
         final String IP_ADDRESS = "localhost";
         final int THREAD_COUNT = 3; // The number of threads that the web server can utilize
