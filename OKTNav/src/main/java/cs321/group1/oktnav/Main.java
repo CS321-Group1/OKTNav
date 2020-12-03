@@ -26,10 +26,12 @@ public class Main {
     public static void main(String[] args) throws IOException, URISyntaxException {
         // Create initial list of locations so we can pass into the Map variable on
         // initialization
-        ArrayList<Location> allLocations = new ArrayList<Location>();
+        ArrayList<Location> allLocations = new ArrayList<>();
+        ArrayList<VerticalTransition> verticalTransitions = new ArrayList<>();
         // Create a hashtable to keep track of what name corresponds to what ID
         Hashtable<String, String> nameToIDMap = new Hashtable<>();
-        // Create a hashtable to keep track of what ID corresponds to what Location
+        // Create hashtables to keep track of what ID corresponds to what Location and
+        // vice verse
         Hashtable<String, Location> idToLocationMap = new Hashtable<>();
         // Create a hashtable to keep track of what connections each location has
         Hashtable<String, ArrayList<String>> idToConnectionsMap = new Hashtable<>();
@@ -46,8 +48,10 @@ public class Main {
             String lineData[] = scanner.nextLine().split(",");
             try {
                 // Check if this location has a name
-                if (lineData[1].length() > 0) {
-                    nameToIDMap.put(lineData[1], lineData[0]);
+                String ID = lineData[0];
+                String NAME = lineData[1];
+                if (NAME.length() > 0) {
+                    nameToIDMap.put(NAME, ID);
                 }
                 // Retrieve read X-value from CSV, converting from a string to an integer
                 int X = (int) Float.parseFloat(lineData[2]);
@@ -55,15 +59,27 @@ public class Main {
                 int Y = (int) Float.parseFloat(lineData[3]);
                 // Retrieve read Z-value from cSV, converting from a string to an integer
                 int Z = (int) Float.parseFloat(lineData[4]);
+                String type = lineData[5];
                 // Create location object with read values from the CSV file
-                Location readLocation = new Location(X, Y, Z, new ArrayList<Location>());
+                Location readLocation;
+                if (type.equals("R")) {
+                    readLocation = new Room(ID, NAME, X, Y, Z, new ArrayList<Location>());
+                } else if (type.equals("VT/S")) {
+                    readLocation = new VerticalTransition(ID, false, X, Y, Z, new ArrayList<Location>());
+                    verticalTransitions.add((VerticalTransition) readLocation);
+                } else if (type.equals("VT/E")) {
+                    readLocation = new VerticalTransition(ID, true, X, Y, Z, new ArrayList<Location>());
+                    verticalTransitions.add((VerticalTransition) readLocation);
+                } else {
+                    readLocation = new Location(ID, X, Y, Z, new ArrayList<Location>());
+                }
                 // Add read location from CSV file into ArrayList of total locations
                 allLocations.add(readLocation);
                 // Map ID to Location object
-                idToLocationMap.put(lineData[0], readLocation);
+                idToLocationMap.put(ID, readLocation);
 
                 ArrayList<String> conns = new ArrayList<>();
-                for (int i = 5; i < lineData.length; i++) {
+                for (int i = 6; i < lineData.length; i++) {
                     if (lineData[i].length() > 0)
                         conns.add(lineData[i]);
                 }
@@ -72,6 +88,17 @@ public class Main {
                 // This skips the format error from the header line in the CSV
             }
         }
+
+        for (int i = 0; i < allLocations.size(); i++) {
+            Location location = allLocations.get(i);
+            ArrayList<String> conns = idToConnectionsMap.get(location.getID());
+            for (String conn : conns) {
+                Location other = idToLocationMap.get(conn);
+                location.addConnection(other);
+            }
+        }
+
+        Map map = new Map(nameToIDMap, idToLocationMap, verticalTransitions);
 
         // Config Options for Web Server
         final String IP_ADDRESS = "localhost";
@@ -101,7 +128,7 @@ public class Main {
         server.createContext("/OKTFloor1.svg", new PathHandler("OKTFloor1.svg", "image/svg+xml"));
         server.createContext("/svg-inject.min.js", new PathHandler("svg-inject.min.js", "text/javascript"));
         server.createContext("/locations", new LocationsHandler(nameToIDMap.keys()));
-        server.createContext("/navigate", new NavRequestHandler());
+        server.createContext("/navigate", new NavRequestHandler(map));
         server.createContext("/exit", new ExitHandler(server));
 
         server.start();

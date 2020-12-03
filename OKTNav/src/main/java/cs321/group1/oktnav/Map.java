@@ -1,42 +1,56 @@
 package cs321.group1.oktnav;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
+import org.json.JSONObject;
 /**
  * Class implementation of the Map class
  * This class contains the list of locations that exist in the OKT building
  * @author Drew
  */
 public class Map {
-    // Member variable; stores all locations declared
-    private ArrayList<Location> allLocations;
+    private Hashtable<String, String> nameToIDMap;
+    private Hashtable<String, Location> idToLocationMap;
+    // Member variable; stores all VerticalTransitions declared
+    private ArrayList<VerticalTransition> verticalTransitions;
     // Member variable; stores the path from starting point to end point
-    private ArrayList<Location> path;
+    private Path path;
     /**
      * Constructor for the Map class
      * @param locations - list of locations that exist in the OKT building
-     */
-    public Map(ArrayList<Location> locations){
-        allLocations = new ArrayList<Location>(locations);
+     */    
+    public Map(Hashtable<String, String> nameToIDMap, Hashtable<String, Location> idToLocationMap, ArrayList<VerticalTransition> verticalTransitions) {
+        this.nameToIDMap = nameToIDMap;
+        this.idToLocationMap = idToLocationMap;
+        this.verticalTransitions = verticalTransitions;
     }
      /**
       * Function that sets the path from the starting point to the end point, selected by the user
       * @param path - the path from the starting point to the end point
       */
-    public void setPath(ArrayList<Location> path){
+    public void setPath(Path path){
         // Setting the parameter path as the object's path
-        this.path = new ArrayList<Location>(path);
+        this.path = path;
     }
     
     /**
      * Function that returns the calculated path from the starting point to the end point
      * @return the path from the starting point to the end point
      */
-    public ArrayList<Location> getPath(){
+    public Path getPath(){
         // Returning the object's path where necessary
-        return new ArrayList<Location>(path);
+        return path;
+    }
+    
+    public Location getLocationByID(String id) {
+        return idToLocationMap.get(id);
+    }
+    
+    public Hashtable<String, String> getNameToIDMap() {
+        return nameToIDMap;
     }
     
     public ArrayList<VerticalTransition> getVerticalTransitions(){
-        return new ArrayList<VerticalTransition>();
+        return verticalTransitions;
     }
 }
