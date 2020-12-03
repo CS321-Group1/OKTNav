@@ -35,13 +35,19 @@ public class NavRequestHandler implements HttpHandler {
         
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
         
-        
         Location from = map.getLocationByID(navFrom);
         Location to = map.getLocationByID(navTo);
         int navigationFlag = preferenceToFlagMap.get(preference);
-        Path path = navigator.findRoute(from, to, navigationFlag);
+        Path path;
+        try {
+            path = navigator.findRoute(from, to, navigationFlag);
+        } catch (Exception e) {
+            System.out.println(e);
+            e.printStackTrace();
+            return;
+        }
         String reply = path.getJSON().toString();
-        
+        System.out.println(reply);
         exchange.sendResponseHeaders(200, reply.getBytes().length);
         OutputStream response = exchange.getResponseBody();
         
