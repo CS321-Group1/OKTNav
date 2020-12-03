@@ -45,10 +45,6 @@ function populate_dropdowns() {
     request.send();
 }
 
-function retrieve_map_locations() {
-    // TODO
-}
-
 function reset_navigation() {
     if (!(polyline == null))
         polyline.remove();
