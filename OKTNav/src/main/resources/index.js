@@ -98,11 +98,18 @@ function process_navigation_response(response) {
 }
 
 function submit_navigation_request() {
+    document.getElementById("formAlert").classList.add("d-none")
+
     let xhr = new XMLHttpRequest();
     let from = document.getElementById("fromDrop");
     from = from[from.selectedIndex].id;
     let to = document.getElementById("toDrop");
     to = to[to.selectedIndex].id;
+
+    if (from == "" || to == "") {
+        document.getElementById("formAlert").classList.remove("d-none")
+        return;
+    }
 
     console.log("Requesting navigation from", from, "to", to);
 
