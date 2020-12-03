@@ -5,6 +5,45 @@ var polyline;
 var start_node;
 var end_node;
 
+function populate_dropdowns() {
+    let from = document.getElementById("fromDrop");
+    let to = document.getElementById("toDrop");
+    from.length = 0;
+    to.length = 0;
+
+    let defaultOption = document.createElement("option");
+    defaultOption.text = "Choose a location...";
+
+    from.add(defaultOption);
+    from.selectedIndex = 0;
+    to.add(defaultOption.cloneNode(true));
+    to.selectedIndex = 0;
+
+    const request = new XMLHttpRequest();
+    request.open("GET", "/locations", true);
+
+    request.onload = function () {
+        if (request.status === 200) {
+            const data = JSON.parse(request.responseText).locations;
+            let option;
+            for (let i = 0; i < data.length; i++) {
+                option = document.createElement("option");
+                option.text = data[i].name;
+                from.add(option);
+                to.add(option.cloneNode(true));
+            }
+        } else {
+            console.log("Server returned an error...")
+        }
+    }
+
+    request.onerror = function () {
+        console.error("An error occurred with populating the dropdowns.");
+    };
+
+    request.send();
+}
+
 function retrieve_map_locations() {
     // TODO
 }
@@ -59,8 +98,8 @@ function process_navigation_response(response) {
 
 function submit_navigation_request() {
     let xhr = new XMLHttpRequest();
-    var from = $("#from").find(":selected").text();
-    var to = $("#to").find(":selected").text();
+    var from = $("#fromDrop").find(":selected").text();
+    var to = $("#toDrop").find(":selected").text();
 
     xhr.open("GET", "/navigate?from=" + from + "&to=" + to + "&pref=" + preference, true);
     xhr.send();
@@ -85,6 +124,7 @@ function initialize() {
     // Tasks
     // -Retrieve list of navigable locations from app
     // -Assign functions to buttons
+    populate_dropdowns();
     retrieve_map_locations();
     $("#option1").click(function () { preference = "elevator" });
     $("#option2").click(function () { preference = "stairs" });

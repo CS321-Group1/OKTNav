@@ -21,8 +21,6 @@ public class LocationsHandler implements HttpHandler {
         JSONObject jsonBuilder = new JSONObject();
         JSONObject[] p = new JSONObject[locations.size()];
 
-        jsonBuilder.put("length", locations.size());
-
         for (int i = 0; i < p.length; i++) {
             JSONObject locationJSON = new JSONObject();
             locationJSON.put("name", locations.get(i));
