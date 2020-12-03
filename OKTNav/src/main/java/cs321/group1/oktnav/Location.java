@@ -53,6 +53,17 @@ public class Location {
         }
     }
     
+    /**
+     * Resets fields used by the Pathfinder.
+     */
+    public void reset() {
+        this.f_cost = Double.MAX_VALUE;
+        this.g_cost = Double.MAX_VALUE;
+        this.h_cost = Double.MAX_VALUE;
+        
+        this.parent = null;
+    }
+    
     public String getID() { return id; }
     /**
      * Returns the X coordinate of this location.
