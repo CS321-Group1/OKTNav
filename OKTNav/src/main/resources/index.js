@@ -80,7 +80,7 @@ function process_navigation_response(response) {
     polyline.setAttribute("stroke-width", "6");
     polyline.setAttribute("stroke", "#BBC42A");
     var points = "";
-    for (var i = 1; i < path.length; i++) {
+    for (var i = 0; i < path.length; i++) {
         console.log(path[i]);
         points += path[i].x + "," + path[i].y + " ";
     }
@@ -133,7 +133,6 @@ function initialize() {
     // -Retrieve list of navigable locations from app
     // -Assign functions to buttons
     populate_dropdowns();
-    retrieve_map_locations();
     $("#option1").click(function () { preference = "elevator" });
     $("#option2").click(function () { preference = "stairs" });
     $("#option3").click(function () { preference = "n/a" });
