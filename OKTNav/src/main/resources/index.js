@@ -29,6 +29,7 @@ function populate_dropdowns() {
             for (let i = 0; i < data.length; i++) {
                 option = document.createElement("option");
                 option.text = data[i].name;
+                option.id = data[i].id;
                 from.add(option);
                 to.add(option.cloneNode(true));
             }
@@ -98,8 +99,12 @@ function process_navigation_response(response) {
 
 function submit_navigation_request() {
     let xhr = new XMLHttpRequest();
-    var from = $("#fromDrop").find(":selected").text();
-    var to = $("#toDrop").find(":selected").text();
+    let from = document.getElementById("fromDrop");
+    from = from[from.selectedIndex].id;
+    let to = document.getElementById("toDrop");
+    to = to[to.selectedIndex].id;
+
+    console.log("Requesting navigation from", from, "to", to);
 
     xhr.open("GET", "/navigate?from=" + from + "&to=" + to + "&pref=" + preference, true);
     xhr.send();
