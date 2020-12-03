@@ -34,6 +34,15 @@ public class Map {
     }
     
     /**
+     * Resets the cost fields in all Locations so they are ready for the pathfinder.
+     */
+    public void resetAllLocations(){
+        for (Location l: idToLocationMap.values()){
+            l.reset();
+        }
+    }
+    
+    /**
      * Function that returns the calculated path from the starting point to the end point
      * @return the path from the starting point to the end point
      */
