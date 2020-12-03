@@ -18,10 +18,6 @@ public class NavRequestHandler implements HttpHandler {
         
     }
     
-    public NavRequestHandler(Hashtable<String, Location> nameToIDMap) {
-        
-    }
-    
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String query = exchange.getRequestURI().getQuery();
@@ -32,20 +28,9 @@ public class NavRequestHandler implements HttpHandler {
         
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
         
-        Location a = new Location(0, 0, 0, new ArrayList<Location>());
-        Location b = new Location(3, 2, 0, new ArrayList<Location>());
-        Location c = new Location(927, 20, 0, new ArrayList<Location>());
-        Location d = new Location(100, 50, 0, new ArrayList<Location>());        
-        
-        ArrayList<Location> p = new ArrayList<>();
-        p.add(a);
-        p.add(b);
-        p.add(c);
-        p.add(d);
-        
-        Path path = new Path(p, 300);
-        
-        String reply = path.getJSON().toString();
+        //Path path = new Path(p, 300);
+        //String reply = path.getJSON().toString();
+        String reply = "test";
         exchange.sendResponseHeaders(200, reply.getBytes().length);
         OutputStream response = exchange.getResponseBody();
         

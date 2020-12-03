@@ -29,8 +29,8 @@ public class Room extends Location {
      * @param connections an ArrayList<Location> to the connected locations
      * super calls the Location class's constructor to use the given location
      */
-    public Room (String roomNumber, int x, int y, int z, ArrayList<Location> connections) {
-       super(x, y, z, connections);
+    public Room (String id, String roomNumber, int x, int y, int z, ArrayList<Location> connections) {
+       super(id, x, y, z, connections);
         this.roomNumber = roomNumber;
     }
     

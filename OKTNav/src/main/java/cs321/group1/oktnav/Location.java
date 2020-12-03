@@ -8,6 +8,7 @@ import org.json.JSONObject;
  * @author Areeb
  */
 public class Location {
+    private String id;
     private final int x;
     private final int y;
     private final int z;
@@ -27,7 +28,8 @@ public class Location {
      * @param z the z coordinate on the map (arbitrary representation of each floor).
      * @param connections an ArrayList\<Location\> of other locations this Location is connected to.
      */
-    public Location(int x, int y, int z, ArrayList<Location> connections) {
+    public Location(String id, int x, int y, int z, ArrayList<Location> connections) {
+        this.id = id;
         this.x = x;
         this.y = y;
         this.z = z;
@@ -50,6 +52,8 @@ public class Location {
             throw new IllegalArgumentException("The provided Location other is not connected to this particular node.");
         }
     }
+    
+    public String getID() { return id; }
     /**
      * Returns the X coordinate of this location.
      * @return the X coordinate of this location.
@@ -130,6 +134,7 @@ public class Location {
     public JSONObject getJSON() {
         JSONObject jsonBuilder = new JSONObject();
         
+        jsonBuilder.put("id", id);
         jsonBuilder.put("x", x);
         jsonBuilder.put("y", y);
         jsonBuilder.put("z", z);
