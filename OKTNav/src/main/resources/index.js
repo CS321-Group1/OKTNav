@@ -1,5 +1,3 @@
-// Stores map locations after retrieval
-var map_locations;
 var preference = "n/a";
 var polyline;
 var start_node;
@@ -28,6 +26,8 @@ function populate_dropdowns() {
             let option;
             for (let i = 0; i < data.length; i++) {
                 option = document.createElement("option");
+                // Added a check to bypass the column names from the CSV file so that we do not add a location called "NAME"
+                if(data[i].name === "NAME" && data[i].id === "ID") {continue;}
                 option.text = data[i].name;
                 option.id = data[i].id;
                 from.add(option);
@@ -58,7 +58,7 @@ function process_navigation_response(response) {
     reset_navigation();
     console.log(response);
     path = response.path;
-
+    
     start_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     end_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 
