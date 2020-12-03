@@ -40,15 +40,15 @@
             <div class="card m-4 shadow-lg" style="width: 25vw; min-width: 400px; z-index: 11;">
                 <h5 class="card-header">Navigate</h5>
                 <div class="card-body">
+                    <div class="d-none alert alert-danger" role="alert" id="formAlert">
+                        Sorry, that's not a valid input.
+                    </div>
                     <div class="mx-auto mb-2 input-group">
                         <div class="input-group-prepend w-25">
                             <span class="input-group-text w-100 bg-primary text-light">From</span>
                         </div>
                         <select class="form-control" id="fromDrop">
-                            <option selected>Choose...</option>
-                            <option value="1">SE0</option>
-                            <option value="2">SE1</option>
-                            <option value="3">SE2</option>
+                            <option selected>Loading...</option>
                         </select>
                     </div>
                     <div class="mx-auto mb-2 input-group">
@@ -56,10 +56,7 @@
                             <span class="input-group-text w-100 bg-success text-light">To</span>
                         </div>
                         <select class="form-control" id="toDrop">
-                            <option selected>Choose...</option>
-                            <option value="1">S101</option>
-                            <option value="2">S135</option>
-                            <option value="3">S134</option>
+                            <option selected>Loading...</option>
                         </select>
                     </div>
                     <div class="btn-group btn-group-toggle d-flex justify-content-between flex-nowrap"

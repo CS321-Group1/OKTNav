@@ -7,23 +7,24 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Enumeration;
+import java.util.Hashtable;
 
 /**
  *
- * @author Areeb
+ * @author Tobin
  */
 public class LocationsHandler implements HttpHandler {
     private JSONObject locationsJSON;
 
-    public LocationsHandler(Enumeration<String> keys) {
-        ArrayList<String> locations = Collections.list(keys);
+    public LocationsHandler(Hashtable<String, String> nameToIDMap) {
+        ArrayList<String> locations = Collections.list(nameToIDMap.keys());
         JSONObject jsonBuilder = new JSONObject();
         JSONObject[] p = new JSONObject[locations.size()];
 
         for (int i = 0; i < p.length; i++) {
             JSONObject locationJSON = new JSONObject();
             locationJSON.put("name", locations.get(i));
+            locationJSON.put("id", nameToIDMap.get(locations.get(i)));
             p[i] = locationJSON;
         }
 
