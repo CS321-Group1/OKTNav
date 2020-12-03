@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import org.json.JSONObject;
 
 /**
