@@ -14,8 +14,15 @@ import org.json.JSONObject;
  */
 public class NavRequestHandler implements HttpHandler {
     private Map map;
+    private Navigator navigator;
+    private Hashtable<String, Integer> preferenceToFlagMap;
     public NavRequestHandler(Map map) {
         this.map = map;
+        navigator = new Navigator(map);
+        preferenceToFlagMap = new Hashtable<>();
+        preferenceToFlagMap.put("n/a", -1);
+        preferenceToFlagMap.put("stairs", 0);
+        preferenceToFlagMap.put("elevator", 1);
     }
     
     @Override
@@ -28,9 +35,13 @@ public class NavRequestHandler implements HttpHandler {
         
         System.out.println(navFrom + " to " + navTo + " with preference of " + preference);
         
-        //Path path = new Path(p, 300);
-        //String reply = path.getJSON().toString();
-        String reply = "test";
+        
+        Location from = map.getLocationByID(navFrom);
+        Location to = map.getLocationByID(navTo);
+        int navigationFlag = preferenceToFlagMap.get(preference);
+        Path path = navigator.findRoute(from, to, navigationFlag);
+        String reply = path.getJSON().toString();
+        
         exchange.sendResponseHeaders(200, reply.getBytes().length);
         OutputStream response = exchange.getResponseBody();
         
