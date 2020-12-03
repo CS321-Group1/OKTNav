@@ -13,9 +13,9 @@ import org.json.JSONObject;
  * @author Areeb
  */
 public class NavRequestHandler implements HttpHandler {
-    
-    public NavRequestHandler() {
-        
+    private Map map;
+    public NavRequestHandler(Map map) {
+        this.map = map;
     }
     
     @Override

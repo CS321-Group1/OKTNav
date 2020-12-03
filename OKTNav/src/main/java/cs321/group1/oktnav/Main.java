@@ -127,7 +127,7 @@ public class Main {
         server.createContext("/index.js", new PathHandler("index.js", "text/javascript"));
         server.createContext("/OKTFloor1.svg", new PathHandler("OKTFloor1.svg", "image/svg+xml"));
         server.createContext("/svg-inject.min.js", new PathHandler("svg-inject.min.js", "text/javascript"));
-        server.createContext("/navigate", new NavRequestHandler());
+        server.createContext("/navigate", new NavRequestHandler(map));
         server.createContext("/exit", new ExitHandler(server));
 
         server.start();
