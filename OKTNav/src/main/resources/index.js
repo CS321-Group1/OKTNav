@@ -173,8 +173,11 @@ function exit_application() {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/exit", true);
     xhr.send();
-    // Delay to ensure there is suffient time to send request
-    setTimeout(() => { close(); }, 1000);
+    
+    // Exit on acknowledgement
+    xhr.onload = function () {
+        close();
+    }
 }
 
 function initialize() {
