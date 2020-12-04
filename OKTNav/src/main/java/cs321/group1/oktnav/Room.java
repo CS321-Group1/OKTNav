@@ -8,17 +8,12 @@ package cs321.group1.oktnav;
 import java.util.ArrayList;
 
 /**
- *
- * @author Tobin
- */
-/**
  * A class that contains information about rooms
  * @author Marwa
  */
 public class Room extends Location {
    
     private final String roomNumber;
-    //private final String name;
 
     /**
      * constructor of the class Room that holds information on the located room

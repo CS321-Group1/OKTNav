@@ -11,10 +11,20 @@ import java.io.IOException;
  */
 public class ExitHandler implements HttpHandler {
     private HttpServer server;
+    
+    /**
+     * Constructs an Exit handler, for the purpose of handling exit calls to the application.
+     * @param server 
+     */
     public ExitHandler(HttpServer server) {
         this.server = server;
     }    
 
+    /**
+     * Exits the application.
+     * @param exchange
+     * @throws IOException 
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         server.stop(0);
