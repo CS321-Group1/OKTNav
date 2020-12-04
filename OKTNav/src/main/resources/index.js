@@ -81,6 +81,7 @@ function process_navigation_response(response) {
     console.log(response);
     path = response.path;
     
+     
     // starting location
     start_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     // destination
@@ -103,8 +104,11 @@ function process_navigation_response(response) {
     // once the destination is found it turns green
     end_node.setAttribute("fill", "green");
 
-   // calculate the distance of the connected nodes
-   polyline.getPath(start_node-end_node);
+   
+    
+
+   
+   
     
     // line connecting the two locations
     polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
@@ -118,6 +122,12 @@ function process_navigation_response(response) {
     }
     
     
+    // calculate the distance of the connected nodes
+    var distance = path.length;
+    document.getElementById("distance").innerHTML = distance;
+    
+    // calculate the time
+       
     polyline.setAttribute("points", points);
     //polyline.setAttribute("class", "cls-1");
     polyline.setAttribute("transform", $("defs").attr("transform"));
