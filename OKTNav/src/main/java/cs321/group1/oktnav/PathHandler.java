@@ -25,8 +25,8 @@ public class PathHandler implements HttpHandler {
     }
 
     /**
-     * Handles the exchange. Replies with 
-     * @param exchange
+     * Handles the exchange. Responds with the file data being requested.
+     * @param exchange the HttpExchange between the app and front end.
      * @throws IOException
      */
     @Override
