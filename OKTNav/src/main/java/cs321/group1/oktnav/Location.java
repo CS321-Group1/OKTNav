@@ -142,6 +142,11 @@ public class Location {
      */
     public void setParent(Location p) {parent = p; }
     
+    
+    /**
+     * Creates JSON object from Location data
+     * @return the json representation of the Location
+     */
     public JSONObject getJSON() {
         JSONObject jsonBuilder = new JSONObject();
         

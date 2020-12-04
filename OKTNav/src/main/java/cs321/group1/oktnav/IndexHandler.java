@@ -12,6 +12,11 @@ import java.io.OutputStream;
  */
 public class IndexHandler implements HttpHandler {
 
+    /**
+     * 
+     * @param exchange
+     * @throws IOException 
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println(exchange.getRemoteAddress());

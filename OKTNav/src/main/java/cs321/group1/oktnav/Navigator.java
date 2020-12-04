@@ -37,7 +37,7 @@ public class Navigator {
         }
         
         
-        //otherwise, we must consider all the routes through different vertical Transitions
+        //otherwise, we must consider all the routes through different verticalTransitions
         
         //best path holds the best path we have found so far
         Path bestPath = new Path(new ArrayList<Location>(), Double.MAX_VALUE);
@@ -155,6 +155,7 @@ public class Navigator {
         
         System.out.println("Number Of Steps: " + numberOfSteps);
         
+        //Assemble Path ArrayList from the parent
         Location x = goal;
         double length = 0;
         while(x != null && !x.equals(source)){

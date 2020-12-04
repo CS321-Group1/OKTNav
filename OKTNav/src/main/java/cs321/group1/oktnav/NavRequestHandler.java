@@ -16,6 +16,11 @@ public class NavRequestHandler implements HttpHandler {
     private Map map;
     private Navigator navigator;
     private Hashtable<String, Integer> preferenceToFlagMap;
+    
+    /**
+     * Constructs a NavRequest handler given a map.
+     * @param map 
+     */
     public NavRequestHandler(Map map) {
         this.map = map;
         navigator = new Navigator(map);
@@ -24,6 +29,7 @@ public class NavRequestHandler implements HttpHandler {
         preferenceToFlagMap.put("stairs", 0);
         preferenceToFlagMap.put("elevator", 1);
     }
+    
     
     @Override
     public void handle(HttpExchange exchange) throws IOException {

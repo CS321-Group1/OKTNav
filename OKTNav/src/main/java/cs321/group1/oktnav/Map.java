@@ -51,14 +51,27 @@ public class Map {
         return path;
     }
     
+    /**
+     * Hashmap getter for Locations by id
+     * @param id
+     * @return the Location referenced by id
+     */
     public Location getLocationByID(String id) {
         return idToLocationMap.get(id);
     }
     
+    /**
+     * Accessor for the Hashmap of names to ids
+     * @return the name to id hashmap
+     */
     public Hashtable<String, String> getNameToIDMap() {
         return nameToIDMap;
     }
     
+    /**
+     * Accessor for an arrayList of verticalTransitions on the floorplan.
+     * @return the arrayList of verticalTransitions
+     */
     public ArrayList<VerticalTransition> getVerticalTransitions(){
         return verticalTransitions;
     }

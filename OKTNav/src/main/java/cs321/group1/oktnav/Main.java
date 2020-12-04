@@ -92,7 +92,8 @@ public class Main {
                 e.printStackTrace();
             }
         }
-
+        
+        //Add the connections between locations
         for (int i = 0; i < allLocations.size(); i++) {
             Location location = allLocations.get(i);
             ArrayList<String> conns = idToConnectionsMap.get(location.getID());
@@ -107,6 +108,7 @@ public class Main {
             }
         }
         
+        //Construct a new map with our location hashtables and vertical transitions
         Map map = new Map(nameToIDMap, idToLocationMap, verticalTransitions);
         /*Navigator nav = new Navigator(map);
         int success = 0;
@@ -129,6 +131,8 @@ public class Main {
         }
         System.out.println(output);
         System.out.println("Successes: " + success + "\nFailures: " + failure);*/
+        
+        
         // Config Options for Web Server
         final String IP_ADDRESS = "localhost";
         final int THREAD_COUNT = 3; // The number of threads that the web server can utilize
