@@ -54,6 +54,19 @@ function reset_navigation() {
         end_node.remove();
 }
 
+function focus_map(x, y) {
+    $("svg").remove();
+    var new_svg = document.createElement("img");
+    new_svg.setAttribute("src", "OKTFloor1.svg");
+    new_svg.setAttribute("easypz", '{"applyTransformTo": "svg > *", "options": { "minScale": 0.5, "maxScale": 10, "bounds": { "top": "NaN", "right": "NaN", "bottom": "NaN", "left": "NaN" }} }');
+    xTransform = x - 960;
+    yTransform = y - 540;
+    $("#svg-container").append(new_svg);
+    SVGInject(new_svg);
+    $("svg")[0].setAttribute("viewBox", "" + xTransform + " " + yTransform
+            + " 1920 1080");
+}
+
 function process_navigation_response(response) {
     reset_navigation();
     console.log(response);
@@ -61,7 +74,9 @@ function process_navigation_response(response) {
     
     start_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     end_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-
+    
+    focus_map(path[0].x, path[0].y);
+    
     start_node.setAttribute("cx", path[0].x);
     start_node.setAttribute("cy", path[0].y);
     start_node.setAttribute("r", "10");
