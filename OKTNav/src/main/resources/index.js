@@ -121,16 +121,15 @@ function process_navigation_response(response) {
         points += path[i].x + "," + path[i].y + " ";
     }
     
-    
     // calculate the distance of the connected nodes
     var distance = response.length;
     distance=(distance/50)*6;
     document.getElementById("distance").innerHTML = distance.toFixed(2);
     
     // calculate the time by multiplying the distance by the average speed of a person walking and dividing it by 60 to convert to minutes
-     var time = (5.13333/distance)*60;
-    document.getElementById("time").innerHTML = time.toFixed(0);
-
+    var time = (distance/5.13333)/60;
+    document.getElementById("time").innerHTML = time.toFixed(2);
+    
     polyline.setAttribute("points", points);
     //polyline.setAttribute("class", "cls-1");
     polyline.setAttribute("transform", $("defs").attr("transform"));
