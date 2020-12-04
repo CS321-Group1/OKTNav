@@ -50,9 +50,10 @@ public class Main {
                 // Check if this location has a name
                 String ID = lineData[0];
                 String NAME = lineData[1];
-                if (NAME.length() > 0) {
+                if (NAME.length() > 0 && !NAME.equals("NAME")) {
                     nameToIDMap.put(NAME, ID);
-                }
+                }               
+                
                 // Retrieve read X-value from CSV, converting from a string to an integer
                 int X = (int) Float.parseFloat(lineData[2]);
                 // Retrieve read Y-value from CSV, converting from a string to an integer
@@ -70,6 +71,8 @@ public class Main {
                 } else if (type.equals("VT/E")) {
                     readLocation = new VerticalTransition(ID, true, X, Y, Z, new ArrayList<Location>());
                     verticalTransitions.add((VerticalTransition) readLocation);
+                } else if (type.equals("D")) {
+                    continue;
                 } else {
                     readLocation = new Location(ID, X, Y, Z, new ArrayList<Location>());
                 }
@@ -77,7 +80,7 @@ public class Main {
                 allLocations.add(readLocation);
                 // Map ID to Location object
                 idToLocationMap.put(ID, readLocation);
-
+                System.out.println(idToLocationMap.get(ID).getJSON());
                 ArrayList<String> conns = new ArrayList<>();
                 for (int i = 6; i < lineData.length; i++) {
                     if (lineData[i].length() > 0)
@@ -86,6 +89,7 @@ public class Main {
                 idToConnectionsMap.put(lineData[0], conns);
             } catch (NumberFormatException e) {
                 // This skips the format error from the header line in the CSV
+                e.printStackTrace();
             }
         }
 
@@ -95,11 +99,36 @@ public class Main {
             for (String conn : conns) {
                 Location other = idToLocationMap.get(conn);
                 location.addConnection(other);
+                try {                
+                    other.addConnection(location);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
-
+        
         Map map = new Map(nameToIDMap, idToLocationMap, verticalTransitions);
-
+        /*Navigator nav = new Navigator(map);
+        int success = 0;
+        int failure = 0;
+        String output = "";
+        for (String name: nameToIDMap.keySet())
+        {
+            for (String name_other: nameToIDMap.keySet())
+            {
+                Location a = map.getLocationByID(nameToIDMap.get(name));
+                Location b = map.getLocationByID(nameToIDMap.get(name_other));
+                try {
+                    nav.findRoute(a, b, -1);
+                    success += 1;
+                } catch (Exception e) {
+                    output += "Failure: " + name + " to " + name_other + " " + e.getMessage() + "\n";
+                    failure += 1;
+                }
+            }
+        }
+        System.out.println(output);
+        System.out.println("Successes: " + success + "\nFailures: " + failure);*/
         // Config Options for Web Server
         final String IP_ADDRESS = "localhost";
         final int THREAD_COUNT = 3; // The number of threads that the web server can utilize
