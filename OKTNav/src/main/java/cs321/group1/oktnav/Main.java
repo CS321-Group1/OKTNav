@@ -28,24 +28,32 @@ public class Main {
         // initialization
         ArrayList<Location> allLocations = new ArrayList<>();
         ArrayList<VerticalTransition> verticalTransitions = new ArrayList<>();
+        
         // Create a hashtable to keep track of what name corresponds to what ID
         Hashtable<String, String> nameToIDMap = new Hashtable<>();
+        
         // Create hashtables to keep track of what ID corresponds to what Location and
         // vice verse
         Hashtable<String, Location> idToLocationMap = new Hashtable<>();
+        
         // Create a hashtable to keep track of what connections each location has
         Hashtable<String, ArrayList<String>> idToConnectionsMap = new Hashtable<>();
+        
         // Scanner variable; will be used to read the CSV file containing all the
         // locations
         Scanner scanner = new Scanner(ClassLoader.getSystemResourceAsStream("OKTFloor1Locations.csv"));
+        
         // Declaring delimiter to check throughout the CSV file
         scanner.useDelimiter(",");
+        
         // Loop to read CSV file into ArrayList<Location> so we can retrieve all of the
         // locations in the CSV file
+        
         while (scanner.hasNext()) {
             // TODO: Read each individual location in from the CSV file and insert into
             // ArrayList<Location> allLocations
             String lineData[] = scanner.nextLine().split(",");
+            
             try {
                 // Check if this location has a name
                 String ID = lineData[0];
@@ -56,11 +64,15 @@ public class Main {
                 
                 // Retrieve read X-value from CSV, converting from a string to an integer
                 int X = (int) Float.parseFloat(lineData[2]);
+                
                 // Retrieve read Y-value from CSV, converting from a string to an integer
                 int Y = (int) Float.parseFloat(lineData[3]);
+                
                 // Retrieve read Z-value from cSV, converting from a string to an integer
                 int Z = (int) Float.parseFloat(lineData[4]);
+                
                 String type = lineData[5];
+                
                 // Create location object with read values from the CSV file
                 Location readLocation;
                 if (type.equals("R")) {
@@ -110,6 +122,9 @@ public class Main {
         
         //Construct a new map with our location hashtables and vertical transitions
         Map map = new Map(nameToIDMap, idToLocationMap, verticalTransitions);
+        
+        // Code to test for Navigation Bugs. Iterates through every possible
+        // combination of Start and End locations to check for errors.
         /*Navigator nav = new Navigator(map);
         int success = 0;
         int failure = 0;
