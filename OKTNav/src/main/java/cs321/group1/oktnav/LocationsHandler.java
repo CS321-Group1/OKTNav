@@ -10,12 +10,20 @@ import java.util.Collections;
 import java.util.Hashtable;
 
 /**
- *
+ * Class for providing Location names and ids via JSON objects available on HTTP
+ * GET request.
+ * 
  * @author Tobin
  */
 public class LocationsHandler implements HttpHandler {
     private JSONObject locationsJSON;
 
+    /**
+     * Constructor that assembles our Locations Hashtable into a JSON object and
+     * stores to field.
+     * 
+     * @param nameToIDMap the mapping created when initializing Locations from CSV
+     */
     public LocationsHandler(Hashtable<String, String> nameToIDMap) {
         ArrayList<String> locations = Collections.list(nameToIDMap.keys());
         JSONObject jsonBuilder = new JSONObject();
@@ -33,6 +41,13 @@ public class LocationsHandler implements HttpHandler {
         this.locationsJSON = jsonBuilder;
     }
 
+    /**
+     * Method to handle incoming requests to the /locations URI. Will return the
+     * locationsJSON field upon GET request.
+     * 
+     * @param exchange used for communicating with client
+     * @throws IOException
+     */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         System.out.println(exchange.getRemoteAddress());
