@@ -13,6 +13,11 @@ public class Path {
     private ArrayList<Location> path;
     private double length;
     
+    /**
+     * Constructs a Path object
+     * @param p the ArrayList of locations representing the path
+     * @param l the length of the path
+     */
     Path( ArrayList<Location> p, double l ){
         path = p;
         length = l;
@@ -34,6 +39,10 @@ public class Path {
         return length;
     }
     
+    /**
+     * Creates JSON representation of the Path object for use by the frontend.
+     * @return the JSON representation of the path
+     */
     public JSONObject getJSON() {
         JSONObject jsonBuilder = new JSONObject();
         
