@@ -1,5 +1,3 @@
-// Stores map locations after retrieval
-var map_locations;
 var preference = "n/a";
 var polyline;
 var start_node;
@@ -28,6 +26,8 @@ function populate_dropdowns() {
             let option;
             for (let i = 0; i < data.length; i++) {
                 option = document.createElement("option");
+                // Added a check to bypass the column names from the CSV file so that we do not add a location called "NAME"
+                if(data[i].name === "NAME" && data[i].id === "ID") {continue;}
                 option.text = data[i].name;
                 option.id = data[i].id;
                 from.add(option);
@@ -45,10 +45,6 @@ function populate_dropdowns() {
     request.send();
 }
 
-function retrieve_map_locations() {
-    // TODO
-}
-
 function reset_navigation() {
     if (!(polyline == null))
         polyline.remove();
@@ -58,14 +54,29 @@ function reset_navigation() {
         end_node.remove();
 }
 
+function focus_map(x, y) {
+    $("svg").remove();
+    var new_svg = document.createElement("img");
+    new_svg.setAttribute("src", "OKTFloor1.svg");
+    new_svg.setAttribute("easypz", '{"applyTransformTo": "svg > *", "options": { "minScale": 0.5, "maxScale": 10, "bounds": { "top": "NaN", "right": "NaN", "bottom": "NaN", "left": "NaN" }} }');
+    xTransform = x - 960;
+    yTransform = y - 540;
+    $("#svg-container").append(new_svg);
+    SVGInject(new_svg);
+    $("svg")[0].setAttribute("viewBox", "" + xTransform + " " + yTransform
+            + " 1920 1080");
+}
+
 function process_navigation_response(response) {
     reset_navigation();
     console.log(response);
     path = response.path;
-
+    
     start_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     end_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-
+    
+    focus_map(path[0].x, path[0].y);
+    
     start_node.setAttribute("cx", path[0].x);
     start_node.setAttribute("cy", path[0].y);
     start_node.setAttribute("r", "10");
@@ -84,7 +95,7 @@ function process_navigation_response(response) {
     polyline.setAttribute("stroke-width", "6");
     polyline.setAttribute("stroke", "#BBC42A");
     var points = "";
-    for (var i = 1; i < path.length; i++) {
+    for (var i = 0; i < path.length; i++) {
         console.log(path[i]);
         points += path[i].x + "," + path[i].y + " ";
     }
@@ -137,7 +148,6 @@ function initialize() {
     // -Retrieve list of navigable locations from app
     // -Assign functions to buttons
     populate_dropdowns();
-    retrieve_map_locations();
     $("#option1").click(function () { preference = "elevator" });
     $("#option2").click(function () { preference = "stairs" });
     $("#option3").click(function () { preference = "n/a" });

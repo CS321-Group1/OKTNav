@@ -30,9 +30,9 @@
                 Application</a>
         </nav>
 
-        <div style="z-index: 10; position: absolute; width: 100vw; height: 100vh;">
+        <div style="z-index: 10; position: absolute; width: 100vw; height: 100vh;" id="svg-container">
             <script src="https://code.easypz.io/easypz.latest.min.js"></script>
-            <img src="OKTFloor1.svg" onload="SVGInject(this)" easypz />
+            <img src="OKTFloor1.svg" onload="SVGInject(this)" easypz='{"applyTransformTo": "svg > *", "options": { "minScale": 0.5, "maxScale": 10, "bounds": { "top": "NaN", "right": "NaN", "bottom": "NaN", "left": "NaN" }} }'/>
         </div>
 
         <!-- Options Card -->
