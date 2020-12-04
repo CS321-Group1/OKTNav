@@ -3,6 +3,7 @@ var polyline;
 var start_node;
 var end_node;
 
+// function that stores the floor1locations.csv in each dropdown list and sorts it
 function populate_dropdowns() {
     let from = document.getElementById("fromDrop");
     let to = document.getElementById("toDrop");
@@ -23,6 +24,10 @@ function populate_dropdowns() {
     request.onload = function () {
         if (request.status === 200) {
             const data = JSON.parse(request.responseText).locations;
+            // Sort the inputs in descending order to properly display in the drop down list
+            data.sort(function(a, b){
+                return a.name.localeCompare(b.name);
+            });
             let option;
             for (let i = 0; i < data.length; i++) {
                 option = document.createElement("option");
@@ -38,6 +43,7 @@ function populate_dropdowns() {
         }
     }
 
+    
     request.onerror = function () {
         console.error("An error occurred with populating the dropdowns.");
     };
@@ -45,6 +51,7 @@ function populate_dropdowns() {
     request.send();
 }
 
+// function to reset the navigation system
 function reset_navigation() {
     if (!(polyline == null))
         polyline.remove();
@@ -54,6 +61,7 @@ function reset_navigation() {
         end_node.remove();
 }
 
+// function to keep the map in a certain position when opened
 function focus_map(x, y) {
     $("svg").remove();
     var new_svg = document.createElement("img");
@@ -67,38 +75,49 @@ function focus_map(x, y) {
             + " 1920 1080");
 }
 
+// function that focuses on the navigate toolbar and changes the two points of location once they are found
 function process_navigation_response(response) {
     reset_navigation();
     console.log(response);
     path = response.path;
     
+    // starting location
     start_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    // destination
     end_node = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     
+   
     focus_map(path[0].x, path[0].y);
     
     start_node.setAttribute("cx", path[0].x);
     start_node.setAttribute("cy", path[0].y);
     start_node.setAttribute("r", "10");
     start_node.setAttribute("transform", $("defs").attr("transform"));
+    // once the start location is found it turns blue
     start_node.setAttribute("fill", "blue");
 
     end_node.setAttribute("cx", path[path.length - 1].x);
     end_node.setAttribute("cy", path[path.length - 1].y);
     end_node.setAttribute("r", "10");
     end_node.setAttribute("transform", $("defs").attr("transform"));
+    // once the destination is found it turns green
     end_node.setAttribute("fill", "green");
 
-
+   // calculate the distance of the connected nodes
+   polyline.getPath(start_node-end_node);
+    
+    // line connecting the two locations
     polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
     polyline.setAttribute("fill-opacity", "0");
     polyline.setAttribute("stroke-width", "6");
-    polyline.setAttribute("stroke", "#BBC42A");
+    polyline.setAttribute("stroke", "#FF7F11");
     var points = "";
     for (var i = 0; i < path.length; i++) {
         console.log(path[i]);
         points += path[i].x + "," + path[i].y + " ";
     }
+    
+    
     polyline.setAttribute("points", points);
     //polyline.setAttribute("class", "cls-1");
     polyline.setAttribute("transform", $("defs").attr("transform"));
@@ -108,6 +127,7 @@ function process_navigation_response(response) {
     $("#Layer_2").append(end_node);
 }
 
+// function to alert the user
 function submit_navigation_request() {
     document.getElementById("formAlert").classList.add("d-none")
 
@@ -135,6 +155,7 @@ function submit_navigation_request() {
     };
 }
 
+// function that exits the application
 function exit_application() {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/exit", true);
